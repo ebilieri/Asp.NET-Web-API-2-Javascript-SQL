@@ -10,7 +10,7 @@ namespace WebApp
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-
+            config.EnableCors(); // **** Habilitar acessso a API
             // Web API routes
             config.MapHttpAttributeRoutes();
 

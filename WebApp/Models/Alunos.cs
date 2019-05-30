@@ -1,11 +1,14 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Hosting;
 
 namespace WebApp.Models
 {
-    public class Alunos
+    public class Aluno
     {
         public int Id { get; set; }
         public string Nome { get; set; }
@@ -13,27 +16,77 @@ namespace WebApp.Models
         public string Telefone { get; set; }
         public int RA { get; set; }
 
-        public List<Alunos> ListaAlunos()
+        public List<Aluno> ListarAlunos()
         {
-            Alunos aluno = new Alunos();
-            aluno.Id = 1;
-            aluno.Nome = "Emerson";
-            aluno.SobreNome = "Bilieri";
-            aluno.Telefone = "123478";
-            aluno.RA = 1345;
+            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
-            Alunos aluno1 = new Alunos();
-            aluno1.Id = 2;
-            aluno1.Nome = "Emerson2";
-            aluno1.SobreNome = "Bilieri";
-            aluno1.Telefone = "123478";
-            aluno1.RA = 13452;
+            var json = File.ReadAllText(caminhoArquivo);
 
-            List<Alunos> listaAlunos = new List<Alunos>();
-            listaAlunos.Add(aluno);
-            listaAlunos.Add(aluno1);
+            var listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
            
             return listaAlunos;
+        }
+
+        public bool ReescreverArquivo(List<Aluno> listaAlunos)
+        {
+            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
+
+            var json = JsonConvert.SerializeObject(listaAlunos, Formatting.Indented);
+
+            File.WriteAllText(caminhoArquivo, json);
+
+            return true;
+        }
+
+        public Aluno Inserir(Aluno aluno)
+        {
+            var listaAlunos = ListarAlunos();
+            var maxId = listaAlunos.Max(x => x.Id);
+            aluno.Id = maxId + 1;
+            listaAlunos.Add(aluno);
+
+            ReescreverArquivo(listaAlunos);
+
+            return aluno;
+        }
+
+        public Aluno Atualizar(int id, Aluno aluno)
+        {
+            var listaAlunos = ListarAlunos();
+            var itemIndex = listaAlunos.FindIndex(x => x.Id == aluno.Id);
+
+            if (itemIndex >= 0)
+            {
+                aluno.Id = id;
+                listaAlunos[itemIndex] = aluno;
+            }
+            else
+            {
+                return null;
+            }
+            
+            ReescreverArquivo(listaAlunos);
+
+            return aluno;
+        }
+
+        public bool Deletar(int id)
+        {
+            var listaAlunos = ListarAlunos();
+            var itemIndex = listaAlunos.FindIndex(x => x.Id == id);
+
+            if (itemIndex >= 0)
+            {
+                listaAlunos.RemoveAt(itemIndex);
+            }
+            else
+            {
+                return false;
+            }
+
+            ReescreverArquivo(listaAlunos);
+
+            return true;
         }
     }
 }

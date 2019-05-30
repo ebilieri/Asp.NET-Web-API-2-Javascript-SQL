@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<h2 id="titulo">Cadastrar Aluno</h2>
+	<div>Nome: <input id="nome" type="text"></div>
+	<div>Sobrenome: <input id="sobrenome" type="text"></div>
+	<div>Telefone: <input id="telefone" type="text"></div>
+	<div>RA: <input id="ra" type="text"></div>	
+	<div>
+		<button id="btnSalvar" onclick="cadastrar()">Cadastrar</button>
+		<button id="btnCancelar" onclick="cancelar()">Cancelar</button>
+	</div>
+	<table border="1">
+		<thead>
+			<tr>
+				<td>Nome</td>
+				<td>Sobrenome</td>
+				<td>Telefone</td>
+				<td>RA</td>
+				<td>Opções</td>
+			</tr>			
+		</thead>
+		<tbody>			
+		</tbody>
+	</table>
+	<script type="text/javascript">
+		var tbody = document.querySelector('table tbody');
+		var aluno = {};
+
+		function cadastrar(){			 			
+			aluno.nome = document.querySelector('#nome').value;
+			aluno.sobrenome = document.querySelector('#sobrenome').value;
+			aluno.telefone = document.querySelector('#telefone').value;
+			aluno.ra = document.querySelector('#ra').value;
+			
+			if (aluno.Id === undefined || aluno.Id === 0)		
+			{
+				salvarEstudantes('POST', 0, aluno);
+			}
+			else
+			{
+				salvarEstudantes('PUT', aluno.Id, aluno);
+			}
+
+			carregaEstudantes();
+		}
+
+		function carregaEstudantes(){
+			tbody.innerHTML = '';
+			
+			var xhr = new XMLHttpRequest();
+
+			xhr.open('GET', 'https://localhost:44346/api/aluno', true);
+
+			xhr.onload = function(){
+				var estudantes = JSON.parse(this.responseText);
+
+				for (var indice in estudantes){
+					adicionaLinha(estudantes[indice]);					
+				}
+			}
+			
+			xhr.send();
+			
+		}
+
+		function salvarEstudantes(metodo, id, corpo){			
+			if (id === undefined || id === 0)
+				id = '';
+
+			var xhr = new XMLHttpRequest();
+
+			xhr.open(metodo, `https://localhost:44346/api/aluno/${id}`, false);
+			
+			if (corpo !== undefined){
+				xhr.setRequestHeader('content-type', 'application/json');
+				xhr.send(JSON.stringify(corpo));
+			}
+			else
+			{
+				xhr.send();
+			}
+		}
+
+		
+
+		function editarEstudante(estudante){
+			var btnSalvar = document.querySelector('#btnSalvar');
+			var btnCancelar = document.querySelector('#btnCancelar');
+			var titulo = document.querySelector("#titulo");
+
+			document.querySelector('#nome').value = estudante.Nome;
+			document.querySelector('#sobrenome').value = estudante.SobreNome;
+			document.querySelector('#telefone').value = estudante.Telefone;
+			document.querySelector('#ra').value = estudante.RA;
+
+			btnSalvar.textContent = 'Salvar';
+			btnCancelar.textContent = 'Cancelar';
+			titulo.textContent = `Editar Aluno ${estudante.Nome}`
+
+			aluno = estudante;
+
+			//console.log(estudante);
+		}
+
+		function cancelar(){
+			var btnSalvar = document.querySelector('#btnSalvar');
+			var btnCancelar = document.querySelector('#btnCancelar');
+			var titulo = document.querySelector("#titulo");
+
+			document.querySelector('#nome').value = '';
+			document.querySelector('#sobrenome').value = '';
+			document.querySelector('#telefone').value = '';
+			document.querySelector('#ra').value = '';
+
+			btnSalvar.textContent = 'Cadastrar';
+			btnCancelar.textContent = 'Limpar';
+			titulo.textContent = 'Cadastrar Aluno'
+		}
+
+		function adicionaLinha(estudante){			
+			
+			var trow = `<tr>
+							<td>${estudante.Nome}</td>
+							<td>${estudante.SobreNome}</td>
+							<td>${estudante.Telefone}</td>
+							<td>${estudante.RA}</td>
+							<td><button onclick='editarEstudante(${JSON.stringify(estudante)})'>Editar</button></td>
+						</td>`
+
+			tbody.innerHTML += trow;
+		}
+
+		carregaEstudantes();
+	</script>
+</body>
+</html>

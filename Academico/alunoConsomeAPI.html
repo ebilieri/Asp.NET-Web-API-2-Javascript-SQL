@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <h2 id="titulo">Cadastrar Aluno</h2>
+    <div>Nome: <input id="nome" type="text"></div>
+    <div>Sobrenome: <input id="sobrenome" type="text"></div>
+    <div>Telefone: <input id="telefone" type="text"></div>
+    <div>RA: <input id="ra" type="text" maxlength="10"></div>
+    <div>
+        <button id="btnSalvar" onclick="cadastrar()">Cadastrar</button>
+        <button id="btnCancelar" onclick="cancelarLimpar()">Cancelar</button>
+    </div>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>Nome</td>
+                <td>Sobrenome</td>
+                <td>Telefone</td>
+                <td>RA</td>
+                <td>Opções</td>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="scripts/scriptsAluno.js"></script>
+</body>
+</html>

@@ -18,6 +18,7 @@ function cadastrar() {
         salvarAluno('PUT', aluno.Id, aluno);
     }
 
+    $('#exampleModal').modal('hide');
     carregarAlunos();
    // cancelarLimpar();    
 }
@@ -59,9 +60,26 @@ function excluirAluno(id) {
     xhr.send();
 }
 
-function excluir(id) {
-    excluirAluno(id);
-    carregarAlunos();
+function excluir(aluno) {
+    bootbox.confirm({
+        message: `Tem certeza que deseja excluir o aluno ${aluno.Nome}?`,
+        buttons: {
+            confirm: {
+                label: 'Sim',
+                className: 'btn-success'
+            },
+            cancel: {
+                label: 'Não',
+                className: 'btn-danger'
+            }
+        },
+        callback: function (result) {
+            if (result){
+                excluirAluno(aluno.Id);
+                carregarAlunos();
+            }
+        }
+    });    
 }
 
 function editarAluno(alunoEdit) {
@@ -113,7 +131,7 @@ function adicionaLinha(aluno) {
     <td>${aluno.RA}</td>
     <td>
     <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal" onclick='editarAluno(${JSON.stringify(aluno)})'>Editar</button>
-    <button class="btn btn-danger" onclick='excluir(${aluno.Id})'>Excluir</button>
+    <button class="btn btn-danger" onclick='excluir(${JSON.stringify(aluno)})'>Excluir</button>
     </td>
     </td>`
 

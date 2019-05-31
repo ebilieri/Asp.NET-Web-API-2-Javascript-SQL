@@ -1,3 +1,4 @@
+
 var tbody = document.querySelector('table tbody');
 var aluno = {}; // Instanciar aluno
 
@@ -18,7 +19,7 @@ function cadastrar() {
     }
 
     carregarAlunos();
-    cancelarLimpar();
+   // cancelarLimpar();    
 }
 
 function carregarAlunos() {
@@ -44,7 +45,7 @@ function salvarAluno(metodo, id, corpo) {
 
     var xhr = new XMLHttpRequest();
     xhr.open(metodo, `https://localhost:44346/api/aluno/${id}`, false);
-  
+
     xhr.setRequestHeader('content-type', 'application/json');
     // Gravar registros no banco de dados
     xhr.send(JSON.stringify(corpo));            
@@ -64,8 +65,7 @@ function excluir(id) {
 }
 
 function editarAluno(alunoEdit) {
-    var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
+    var btnSalvar = document.querySelector('#btnSalvar');    
     var titulo = document.querySelector("#titulo");
 
     // carregar dados no formulário para edição
@@ -74,42 +74,48 @@ function editarAluno(alunoEdit) {
     document.querySelector('#telefone').value = alunoEdit.Telefone;
     document.querySelector('#ra').value = alunoEdit.RA;
 
-    btnSalvar.textContent = 'Salvar';
-    btnCancelar.textContent = 'Cancelar';
-    titulo.textContent = `Editar Aluno ${alunoEdit.Nome}`
+    btnSalvar.textContent = 'Salvar';    
+    exampleModalLabel.textContent = `Editar Aluno ${alunoEdit.Nome}`
 
     aluno = alunoEdit;            
 }
 
-function cancelarLimpar() {
-    var btnSalvar = document.querySelector('#btnSalvar');
-    var btnCancelar = document.querySelector('#btnCancelar');
+function novoAluno(){
+    var btnSalvar = document.querySelector('#btnSalvar');    
     var titulo = document.querySelector("#titulo");
 
     // limpar aluno
+    aluno = {};
     document.querySelector('#nome').value = '';
     document.querySelector('#sobrenome').value = '';
     document.querySelector('#telefone').value = '';
     document.querySelector('#ra').value = '';
 
-    btnSalvar.textContent = 'Cadastrar';
-    btnCancelar.textContent = 'Limpar';
+    btnSalvar.textContent = 'Cadastrar';    
     titulo.textContent = 'Cadastrar Aluno';
+    
+    $('#exampleModal').modal('show');
+}
+
+function cancelar() {    
+    // limpar aluno
     aluno = {};
+        
+    $('#exampleModal').modal('hide');
 }
 
 function adicionaLinha(aluno) {
 	// adicionar linhas na tabela
     var trow = `<tr>
-                    <td>${aluno.Nome}</td>
-                    <td>${aluno.SobreNome}</td>
-                    <td>${aluno.Telefone}</td>
-                    <td>${aluno.RA}</td>
-                    <td>
-                        <button onclick='editarAluno(${JSON.stringify(aluno)})'>Editar</button>
-                        <button onclick='excluir(${aluno.Id})'>Excluir</button>
-                    </td>
-                </td>`
+    <td>${aluno.Nome}</td>
+    <td>${aluno.SobreNome}</td>
+    <td>${aluno.Telefone}</td>
+    <td>${aluno.RA}</td>
+    <td>
+    <button class="btn btn-info" data-toggle="modal" data-target="#exampleModal" onclick='editarAluno(${JSON.stringify(aluno)})'>Editar</button>
+    <button class="btn btn-danger" onclick='excluir(${aluno.Id})'>Excluir</button>
+    </td>
+    </td>`
 
     tbody.innerHTML += trow;
 }

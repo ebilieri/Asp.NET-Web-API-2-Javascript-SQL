@@ -5,35 +5,65 @@
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/style.css" rel="stylesheet">
 </head>
 <body>
-    <h2 id="titulo">Cadastrar Aluno</h2>
-    <div>Nome: <input id="nome" type="text"></div>
-    <div>Sobrenome: <input id="sobrenome" type="text"></div>
-    <div>Telefone: <input id="telefone" type="text"></div>
-    <div>RA: <input id="ra" type="text" maxlength="10"></div>
-    <div>
-        <button id="btnSalvar" onclick="cadastrar()">Cadastrar</button>
-        <button id="btnCancelar" onclick="cancelarLimpar()">Cancelar</button>
+    <div class="container">
+        <div class="cabecalhoCadastro">
+            <h2 id="titulo">Cadastrar Aluno</h2>
+            <div class="text-right">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" onclick="novoAluno()">
+                    Cadastrar
+                </button>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Nome</td>
+                    <td>Sobrenome</td>
+                    <td>Telefone</td>
+                    <td>RA</td>
+                    <td>Opções</td>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
     </div>
-    <table border="1">
-        <thead>
-            <tr>
-                <td>Nome</td>
-                <td>Sobrenome</td>
-                <td>Telefone</td>
-                <td>RA</td>
-                <td>Opções</td>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cadastrar Aluno</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group"><label>Nome: </label><input class="form-control" id="nome" type="text"></div>
+                    <div class="form-group"><label>Sobrenome: </label><input class="form-control" id="sobrenome" type="text"></div>
+                    <div class="form-group"><label>Telefone: </label><input class="form-control" id="telefone" type="text"></div>
+                    <div class="form-group"><label>RA: </label><input class="form-control" id="ra" type="text" maxlength="10"></div>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" id="btnSalvar" onclick="cadastrar()">Cadastrar</button>
+                    <button class="btn btn-secondary" id="btnCancelar" onclick="cancelar()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-    
+
     <script type="text/javascript" src="scripts/scriptsAluno.js"></script>
 </body>
 </html>

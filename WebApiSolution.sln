@@ -5,9 +5,19 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{2B84CAB9-C354-4554-8ECB-17D7CE4718E9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JavaScriptApi", "JavaScriptApi", "{3CFEC361-FC23-4822-9833-784251C74942}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Academico", "Academico", "{3CFEC361-FC23-4822-9833-784251C74942}"
 	ProjectSection(SolutionItems) = preProject
-		JavaScript\alunoConsomeAPI.html = JavaScript\alunoConsomeAPI.html
+		Academico\alunoConsomeAPI.html = Academico\alunoConsomeAPI.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Styles", "Styles", "{35AC7788-2F9D-4D2A-B3F5-FBAC41218566}"
+	ProjectSection(SolutionItems) = preProject
+		Academico\styles\style.css = Academico\styles\style.css
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A8742E5C-EDFE-40F1-A188-20A3E589CE5E}"
+	ProjectSection(SolutionItems) = preProject
+		Academico\scripts\scriptsAluno.js = Academico\scripts\scriptsAluno.js
 	EndProjectSection
 EndProject
 Global
@@ -23,6 +33,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{35AC7788-2F9D-4D2A-B3F5-FBAC41218566} = {3CFEC361-FC23-4822-9833-784251C74942}
+		{A8742E5C-EDFE-40F1-A188-20A3E589CE5E} = {3CFEC361-FC23-4822-9833-784251C74942}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {92E3B2E2-F831-47B8-957A-1150B423256A}

@@ -1,5 +1,9 @@
 # Asp.NET-Web-API-2-Javascript-SQL
-Asp.NET Web API 2 e Javascript + SQL
+
+Esse repositório a armezana os exercicios realizados no curso:
+# Seja Fullstack com Asp.NET Web API 2 e Javascript + SQL
+
+https://www.udemy.com/web-api-vuejs-bootstrap/
 
 Tecnologias
 ASP.NET Web API v2
@@ -32,7 +36,7 @@ Descrição
 
 Utilizando tecnologias web, apresento à você o desenvolvimento back-end e front-end de uma aplicação com as linguagens HTML, CSS e JAVASCRIPT no front-end e no back-end vamos utilizar principalmente C#. Em relação a framework vamos utilizar BOOTSTRAP entre outras bibliotecas javascript e ASP.NET Web API 2.
 
-Tenho mais de 12 anos de experiência com análise e desenvolvimento de software, mais de 5 anos de experiência como professor universitário. Contudo, venho percebendo o que os alunos gostariam e o que o mercado precisa. Vamos utilizar diversas IDE's e Visual Studio 2017, Sublime Text Editor 3 e Visual Studio Code entre outros.
+Vamos utilizar diversas IDE's e Visual Studio 2017, Sublime Text Editor 3 e Visual Studio Code entre outros.
 Para quem é este curso:
 
     * Que queira desenvolver uma API Web (Rest) para ser consumida por aplicações mobile, web ou desktop.

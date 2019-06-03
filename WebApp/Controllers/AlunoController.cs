@@ -23,7 +23,7 @@ namespace WebApp.Controllers
             {
                 Aluno aluno = new Aluno();
 
-                return Ok(aluno.ListarAlunos());
+                return Ok(aluno.ListarAlunosDB());
             }
             catch (Exception ex)
             {
@@ -58,28 +58,57 @@ namespace WebApp.Controllers
         {
             Aluno aluno = new Aluno();
 
-            return aluno.ListarAlunos().Where(x => x.Id == id).FirstOrDefault();
+            return aluno.ListarAlunosDB(id).FirstOrDefault();
         }
 
         // POST: api/Aluno
-        public List<Aluno> Post(Aluno aluno)
+        [HttpPost]
+        public IHttpActionResult Post(Aluno aluno)
         {
-            aluno.Inserir(aluno);
+            try
+            {
+                aluno.InserirDB(aluno);
 
-            return aluno.ListarAlunos();
+                return Ok(aluno.ListarAlunosDB());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // PUT: api/Aluno/5
-        public Aluno Put(int id, [FromBody]Aluno aluno)
+        [HttpPut]
+        public IHttpActionResult Put(int id, [FromBody]Aluno aluno)
         {
-            return aluno.Atualizar(id, aluno);
+            try
+            {
+                aluno.Id = id;
+
+                aluno.AtualizarDB(aluno);
+
+                return Ok(aluno.ListarAlunosDB(id).FirstOrDefault());
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         // DELETE: api/Aluno/5
-        public void Delete(int id)
+        [HttpDelete]
+        public IHttpActionResult Delete(int id)
         {
-            Aluno aluno = new Aluno();
-            aluno.Deletar(id);
+            try
+            {
+                Aluno aluno = new Aluno();
+                aluno.DeletarDB(id);
+                return Ok("Deletado com sucesso");
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

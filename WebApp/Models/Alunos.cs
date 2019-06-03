@@ -14,6 +14,7 @@ namespace WebApp.Models
         public string Nome { get; set; }
         public string SobreNome { get; set; }
         public string Telefone { get; set; }
+        public string Data { get; set; }
         public int RA { get; set; }
 
         public List<Aluno> ListarAlunos()

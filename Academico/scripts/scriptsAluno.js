@@ -28,13 +28,33 @@ function carregarAlunos() {
 
     // carregar lista do banco de dados
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://localhost:44346/api/aluno', true);
-    xhr.onload = function () {
-        var listaAlunos = JSON.parse(this.responseText);
-        // Percorre a lista e preenche a tabela
-        for (var indice in listaAlunos) {
-            adicionaLinha(listaAlunos[indice]);
-        }
+    console.log('UNSENT', xhr.readyState);
+
+    xhr.open('GET', 'https://localhost:44346/api/aluno/listar', true);
+    console.log('OPENED', xhr.readyState);
+
+    xhr.onerror = function(){
+        console.log('ERROR', xhr.readyState);
+    }
+
+    //xhr.onload = function () {
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                var listaAlunos = JSON.parse(this.responseText);
+                console.log('DONE', xhr.readyState);
+                
+                // Percorre a lista e preenche a tabela
+                for (var indice in listaAlunos) {
+                    adicionaLinha(listaAlunos[indice]);
+                }
+            }
+            else if (this.status == 500) {
+                var erro = JSON.parse(this.responseText);
+                console.log(erro.Message);
+                console.log(erro.ExceptionMessage);
+            }
+        }    
     }
 
     xhr.send();

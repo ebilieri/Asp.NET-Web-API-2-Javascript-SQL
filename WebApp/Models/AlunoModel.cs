@@ -1,30 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿using App.Domain;
+using App.Repository;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Hosting;
 
 namespace WebApp.Models
 {
-    public class Aluno
+    public class AlunoModel
     {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public string SobreNome { get; set; }
-        public string Telefone { get; set; }
-        public string Data { get; set; }
-        public int RA { get; set; }
-
-
-
+        
         #region DB
 
-        public List<Aluno> ListarAlunosDB()
+        public List<AlunoDTO> ListarAlunosDB()
         {
             try
             {
@@ -37,7 +27,7 @@ namespace WebApp.Models
             }
         }
 
-        public List<Aluno> ListarAlunosDB(int id)
+        public List<AlunoDTO> ListarAlunosDB(int id)
         {
             try
             {
@@ -50,7 +40,7 @@ namespace WebApp.Models
             }
         }
 
-        public void InserirDB(Aluno aluno)
+        public void InserirDB(AlunoDTO aluno)
         {
             try
             {
@@ -63,7 +53,7 @@ namespace WebApp.Models
             }
         }
 
-        public void AtualizarDB(Aluno aluno)
+        public void AtualizarDB(AlunoDTO aluno)
         {
             try
             {
@@ -74,9 +64,7 @@ namespace WebApp.Models
             {
                 throw new Exception($" Erro ao atualizar Alunos: {ex.Message }");
             }
-        }
-
-        
+        }        
 
         public void DeletarDB(int id)
         {
@@ -96,18 +84,18 @@ namespace WebApp.Models
 
 
 
-        public List<Aluno> ListarAlunos()
+        public List<AlunoDTO> ListarAlunos()
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
             var json = File.ReadAllText(caminhoArquivo);
 
-            var listaAlunos = JsonConvert.DeserializeObject<List<Aluno>>(json);
+            var listaAlunos = JsonConvert.DeserializeObject<List<AlunoDTO>>(json);
 
             return listaAlunos;
         }
 
-        public bool ReescreverArquivo(List<Aluno> listaAlunos)
+        public bool ReescreverArquivo(List<AlunoDTO> listaAlunos)
         {
             var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
 
@@ -118,7 +106,7 @@ namespace WebApp.Models
             return true;
         }
 
-        public Aluno Inserir(Aluno aluno)
+        public AlunoDTO Inserir(AlunoDTO aluno)
         {
             var listaAlunos = ListarAlunos();
             var maxId = listaAlunos.Max(x => x.Id);
@@ -130,7 +118,7 @@ namespace WebApp.Models
             return aluno;
         }
 
-        public Aluno Atualizar(int id, Aluno aluno)
+        public AlunoDTO Atualizar(int id, AlunoDTO aluno)
         {
             var listaAlunos = ListarAlunos();
             var itemIndex = listaAlunos.FindIndex(x => x.Id == aluno.Id);

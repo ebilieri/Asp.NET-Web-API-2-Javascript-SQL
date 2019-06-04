@@ -1,16 +1,17 @@
-﻿using System;
+﻿using App.Domain;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace WebApp.Models
+namespace App.Repository
 {
     public class AlunoDAO
     {
         //string StringConexao = ConfigurationManager.AppSettings["ConnectionString"] ;
-        private string StringConexao = ConfigurationManager.ConnectionStrings["ConexaoDB"].ConnectionString;
-        private IDbConnection conexao;
+        private readonly string  StringConexao = ConfigurationManager.ConnectionStrings["ConexaoDB"].ConnectionString;
+        private readonly IDbConnection conexao;
 
         public AlunoDAO()
         {
@@ -18,11 +19,11 @@ namespace WebApp.Models
             conexao.Open();
         }
 
-        public List<Aluno> ListarAlunosDB()
+        public List<AlunoDTO> ListarAlunosDB()
         {
             try
             {
-                var listaAlunos = new List<Aluno>();
+                var listaAlunos = new List<AlunoDTO>();
 
                 IDbCommand selctCmd = conexao.CreateCommand();
                 selctCmd.CommandText = "select * from Alunos";
@@ -30,7 +31,7 @@ namespace WebApp.Models
 
                 while (resultado.Read())
                 {
-                    var aluno = new Aluno
+                    var aluno = new AlunoDTO
                     {
                         Id = Convert.ToInt32(resultado["Id"]),
                         Nome = Convert.ToString(resultado["Nome"]),
@@ -56,11 +57,11 @@ namespace WebApp.Models
 
         }
 
-        public List<Aluno> ListarAlunosDB(int id)
+        public List<AlunoDTO> ListarAlunosDB(int id)
         {
             try
             {
-                var listaAlunos = new List<Aluno>();
+                var listaAlunos = new List<AlunoDTO>();
 
                 IDbCommand selctCmd = conexao.CreateCommand();
                 selctCmd.CommandText = $"select * from Alunos where Id = {id}";
@@ -68,7 +69,7 @@ namespace WebApp.Models
 
                 while (resultado.Read())
                 {
-                    var aluno = new Aluno
+                    var aluno = new AlunoDTO
                     {
                         Id = Convert.ToInt32(resultado["Id"]),
                         Nome = Convert.ToString(resultado["Nome"]),
@@ -93,7 +94,7 @@ namespace WebApp.Models
             }
         }
 
-        public void InserirAlunoDB(Aluno aluno)
+        public void InserirAlunoDB(AlunoDTO aluno)
         {
             try
             {
@@ -103,7 +104,7 @@ namespace WebApp.Models
                 IDbDataParameter paramNome = new SqlParameter("Nome", aluno.Nome);
                 IDbDataParameter paramSobreNome = new SqlParameter("SobreNome", aluno.SobreNome);
                 IDbDataParameter paramTelefone = new SqlParameter("Telefone", aluno.Telefone);
-                IDbDataParameter paramData = new SqlParameter("Data", aluno.Data);
+                IDbDataParameter paramData = new SqlParameter("Data", aluno.Data ?? "");
                 IDbDataParameter paramRA = new SqlParameter("RA", aluno.RA);
 
                 insertCmd.Parameters.Add(paramNome);
@@ -125,7 +126,7 @@ namespace WebApp.Models
             }
         }
 
-        public void AtualizarAlunoDB(Aluno aluno)
+        public void AtualizarAlunoDB(AlunoDTO aluno)
         {
             try
             {

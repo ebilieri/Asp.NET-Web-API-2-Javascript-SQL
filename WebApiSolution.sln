@@ -20,6 +20,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{A874
 		Academico\scripts\scriptsAluno.js = Academico\scripts\scriptsAluno.js
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Repository", "App.Repository\App.Repository.csproj", "{5639B560-61F1-4E33-839A-1401A0F131B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App.Domain", "App.Domain\App.Domain.csproj", "{5F1AC912-33DB-4D54-9089-5DFE40701F87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +34,14 @@ Global
 		{2B84CAB9-C354-4554-8ECB-17D7CE4718E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B84CAB9-C354-4554-8ECB-17D7CE4718E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B84CAB9-C354-4554-8ECB-17D7CE4718E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5639B560-61F1-4E33-839A-1401A0F131B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5639B560-61F1-4E33-839A-1401A0F131B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5639B560-61F1-4E33-839A-1401A0F131B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5639B560-61F1-4E33-839A-1401A0F131B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F1AC912-33DB-4D54-9089-5DFE40701F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F1AC912-33DB-4D54-9089-5DFE40701F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F1AC912-33DB-4D54-9089-5DFE40701F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F1AC912-33DB-4D54-9089-5DFE40701F87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

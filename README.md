@@ -27,6 +27,10 @@ ADO.NET
 https://docs.microsoft.com/pt-br/dotnet/framework/data/adonet/
 **********************************
 
+Swashbuckle - Swagger for WebApi
+Install-Package Swashbuckle -Version 5.6.0
+**********************************
+
 
 Requisitos
 

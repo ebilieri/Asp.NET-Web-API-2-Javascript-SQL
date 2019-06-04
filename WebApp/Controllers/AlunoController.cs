@@ -1,8 +1,7 @@
-﻿using System;
+﻿using App.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using WebApp.Models;
@@ -13,15 +12,14 @@ namespace WebApp.Controllers
     [RoutePrefix("api/Aluno")]
     public class AlunoController : ApiController
     {
-        // GET: api/Aluno
-        //public IEnumerable<Aluno> Get()
+
         [HttpGet]
         [Route("Listar")]
         public IHttpActionResult Listar()
         {
             try
             {
-                Aluno aluno = new Aluno();
+                var aluno = new AlunoModel();
 
                 return Ok(aluno.ListarAlunosDB());
             }
@@ -37,8 +35,8 @@ namespace WebApp.Controllers
         {
             try
             {
-                Aluno aluno = new Aluno();
-                IEnumerable<Aluno> alunos = aluno.ListarAlunos().Where(x => x.Data == data || x.Nome.Contains(nome));
+                var aluno = new AlunoModel();
+                IEnumerable<AlunoDTO> alunos = aluno.ListarAlunos().Where(x => x.Data == data || x.Nome.Contains(nome));
 
                 if (!alunos.Any())
                     return NotFound();
@@ -51,23 +49,33 @@ namespace WebApp.Controllers
             }
         }
 
-        // GET: api/Aluno/5
         [HttpGet]
         [Route("Listar/{id:int}")]
-        public Aluno Get(int id)
-        {
-            Aluno aluno = new Aluno();
-
-            return aluno.ListarAlunosDB(id).FirstOrDefault();
-        }
-
-        // POST: api/Aluno
-        [HttpPost]
-        public IHttpActionResult Post(Aluno aluno)
+        public IHttpActionResult Get(int id)
         {
             try
             {
-                aluno.InserirDB(aluno);
+                var aluno = new AlunoModel();
+
+                return Ok(aluno.ListarAlunosDB(id).FirstOrDefault());
+
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult Post(AlunoDTO alunoDTO)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            try
+            {
+                var aluno = new AlunoModel();
+
+                aluno.InserirDB(alunoDTO);
 
                 return Ok(aluno.ListarAlunosDB());
             }
@@ -77,15 +85,15 @@ namespace WebApp.Controllers
             }
         }
 
-        // PUT: api/Aluno/5
         [HttpPut]
-        public IHttpActionResult Put(int id, [FromBody]Aluno aluno)
+        public IHttpActionResult Put(int id, [FromBody]AlunoDTO alunoDTO)
         {
             try
             {
-                aluno.Id = id;
+                alunoDTO.Id = id;
 
-                aluno.AtualizarDB(aluno);
+                var aluno = new AlunoModel();
+                aluno.AtualizarDB(alunoDTO);
 
                 return Ok(aluno.ListarAlunosDB(id).FirstOrDefault());
             }
@@ -95,14 +103,15 @@ namespace WebApp.Controllers
             }
         }
 
-        // DELETE: api/Aluno/5
         [HttpDelete]
         public IHttpActionResult Delete(int id)
         {
             try
             {
-                Aluno aluno = new Aluno();
+                var aluno = new AlunoModel();
+
                 aluno.DeletarDB(id);
+
                 return Ok("Deletado com sucesso");
             }
             catch (Exception ex)

@@ -19,7 +19,7 @@ namespace App.Repository
             conexao.Open();
         }
 
-        public List<AlunoDTO> ListarAlunosDB()
+        public List<AlunoDTO> ListarAlunos()
         {
             try
             {
@@ -57,7 +57,7 @@ namespace App.Repository
 
         }
 
-        public List<AlunoDTO> ListarAlunosDB(int id)
+        public List<AlunoDTO> ListarAlunos(int id)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace App.Repository
             }
         }
 
-        public void InserirAlunoDB(AlunoDTO aluno)
+        public void InserirAluno(AlunoDTO aluno)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace App.Repository
             }
         }
 
-        public void AtualizarAlunoDB(AlunoDTO aluno)
+        public void AtualizarAluno(AlunoDTO aluno)
         {
             try
             {
@@ -159,7 +159,7 @@ namespace App.Repository
             }
         }
 
-        public void DeletarAlunoDB(int id)
+        public void DeletarAluno(int id)
         {
             try
             {

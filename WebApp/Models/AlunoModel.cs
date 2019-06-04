@@ -1,11 +1,7 @@
 ﻿using App.Domain;
 using App.Repository;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web.Hosting;
 
 namespace WebApp.Models
 {
@@ -14,12 +10,12 @@ namespace WebApp.Models
         
         #region DB
 
-        public List<AlunoDTO> ListarAlunosDB()
+        public List<AlunoDTO> Listar()
         {
             try
             {
-                var alunoDB = new AlunoDAO();
-                return alunoDB.ListarAlunosDB();
+                var alunoDao = new AlunoDAO();
+                return alunoDao.ListarAlunos();
             }
             catch (Exception ex)
             {
@@ -27,12 +23,12 @@ namespace WebApp.Models
             }
         }
 
-        public List<AlunoDTO> ListarAlunosDB(int id)
+        public List<AlunoDTO> Listar(int id)
         {
             try
             {
-                var alunoDB = new AlunoDAO();
-                return alunoDB.ListarAlunosDB(id);
+                var alunoDao = new AlunoDAO();
+                return alunoDao.ListarAlunos(id);
             }
             catch (Exception ex)
             {
@@ -40,12 +36,12 @@ namespace WebApp.Models
             }
         }
 
-        public void InserirDB(AlunoDTO aluno)
+        public void Inserir(AlunoDTO alunoDto)
         {
             try
             {
-                var alunoDB = new AlunoDAO();
-                alunoDB.InserirAlunoDB(aluno);
+                var alunoDao = new AlunoDAO();
+                alunoDao.InserirAluno(alunoDto);
             }
             catch (Exception ex)
             {
@@ -53,12 +49,12 @@ namespace WebApp.Models
             }
         }
 
-        public void AtualizarDB(AlunoDTO aluno)
+        public void Atualizar(AlunoDTO alunoDto)
         {
             try
             {
-                var alunoDB = new AlunoDAO();
-                alunoDB.AtualizarAlunoDB(aluno);
+                var alunoDao = new AlunoDAO();
+                alunoDao.AtualizarAluno(alunoDto);
             }
             catch (Exception ex)
             {
@@ -66,12 +62,12 @@ namespace WebApp.Models
             }
         }        
 
-        public void DeletarDB(int id)
+        public void Deletar(int id)
         {
             try
             {
-                var alunoDB = new AlunoDAO();
-                alunoDB.DeletarAlunoDB(id);
+                var alunoDao = new AlunoDAO();
+                alunoDao.DeletarAluno(id);
             }
             catch (Exception ex)
             {
@@ -84,77 +80,6 @@ namespace WebApp.Models
 
 
 
-        public List<AlunoDTO> ListarAlunos()
-        {
-            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
-
-            var json = File.ReadAllText(caminhoArquivo);
-
-            var listaAlunos = JsonConvert.DeserializeObject<List<AlunoDTO>>(json);
-
-            return listaAlunos;
-        }
-
-        public bool ReescreverArquivo(List<AlunoDTO> listaAlunos)
-        {
-            var caminhoArquivo = HostingEnvironment.MapPath(@"~/App_Data/Base.json");
-
-            var json = JsonConvert.SerializeObject(listaAlunos, Formatting.Indented);
-
-            File.WriteAllText(caminhoArquivo, json);
-
-            return true;
-        }
-
-        public AlunoDTO Inserir(AlunoDTO aluno)
-        {
-            var listaAlunos = ListarAlunos();
-            var maxId = listaAlunos.Max(x => x.Id);
-            aluno.Id = maxId + 1;
-            listaAlunos.Add(aluno);
-
-            ReescreverArquivo(listaAlunos);
-
-            return aluno;
-        }
-
-        public AlunoDTO Atualizar(int id, AlunoDTO aluno)
-        {
-            var listaAlunos = ListarAlunos();
-            var itemIndex = listaAlunos.FindIndex(x => x.Id == aluno.Id);
-
-            if (itemIndex >= 0)
-            {
-                aluno.Id = id;
-                listaAlunos[itemIndex] = aluno;
-            }
-            else
-            {
-                return null;
-            }
-
-            ReescreverArquivo(listaAlunos);
-
-            return aluno;
-        }
-
-        public bool Deletar(int id)
-        {
-            var listaAlunos = ListarAlunos();
-            var itemIndex = listaAlunos.FindIndex(x => x.Id == id);
-
-            if (itemIndex >= 0)
-            {
-                listaAlunos.RemoveAt(itemIndex);
-            }
-            else
-            {
-                return false;
-            }
-
-            ReescreverArquivo(listaAlunos);
-
-            return true;
-        }
+        
     }
 }

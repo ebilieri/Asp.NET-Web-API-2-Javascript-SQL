@@ -19,9 +19,9 @@ namespace WebApp.Controllers
         {
             try
             {
-                var aluno = new AlunoModel();
+                var alunoModel = new AlunoModel();
 
-                return Ok(aluno.ListarAlunosDB());
+                return Ok(alunoModel.Listar());
             }
             catch (Exception ex)
             {
@@ -35,8 +35,8 @@ namespace WebApp.Controllers
         {
             try
             {
-                var aluno = new AlunoModel();
-                IEnumerable<AlunoDTO> alunos = aluno.ListarAlunos().Where(x => x.Data == data || x.Nome.Contains(nome));
+                var alunoModel = new AlunoModel();
+                IEnumerable<AlunoDTO> alunos = alunoModel.Listar().Where(x => x.Data == data || x.Nome.Contains(nome));
 
                 if (!alunos.Any())
                     return NotFound();
@@ -55,9 +55,9 @@ namespace WebApp.Controllers
         {
             try
             {
-                var aluno = new AlunoModel();
+                var alunoModel = new AlunoModel();
 
-                return Ok(aluno.ListarAlunosDB(id).FirstOrDefault());
+                return Ok(alunoModel.Listar(id).FirstOrDefault());
 
             }
             catch (Exception ex)
@@ -73,11 +73,11 @@ namespace WebApp.Controllers
                 return BadRequest(ModelState);
             try
             {
-                var aluno = new AlunoModel();
+                var alunoModel = new AlunoModel();
 
-                aluno.InserirDB(alunoDTO);
+                alunoModel.Inserir(alunoDTO);
 
-                return Ok(aluno.ListarAlunosDB());
+                return Ok(alunoModel.Listar());
             }
             catch (Exception ex)
             {
@@ -92,10 +92,10 @@ namespace WebApp.Controllers
             {
                 alunoDTO.Id = id;
 
-                var aluno = new AlunoModel();
-                aluno.AtualizarDB(alunoDTO);
+                var alunoModel = new AlunoModel();
+                alunoModel.Atualizar(alunoDTO);
 
-                return Ok(aluno.ListarAlunosDB(id).FirstOrDefault());
+                return Ok(alunoModel.Listar(id).FirstOrDefault());
             }
             catch (Exception ex)
             {
@@ -108,9 +108,9 @@ namespace WebApp.Controllers
         {
             try
             {
-                var aluno = new AlunoModel();
+                var alunoModel = new AlunoModel();
 
-                aluno.DeletarDB(id);
+                alunoModel.Deletar(id);
 
                 return Ok("Deletado com sucesso");
             }

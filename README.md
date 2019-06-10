@@ -31,6 +31,12 @@ Swashbuckle - Swagger for WebApi
 Install-Package Swashbuckle -Version 5.6.0
 **********************************
 
+Owin
+Install-Package Microsoft.AspNet.WebApi.Owin
+Install-Package Microsoft.Owin.Host.SystemWeb
+Install-Package Microsoft.Owin.Cors
+**********************************
+
 
 Requisitos
 

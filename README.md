@@ -37,6 +37,10 @@ Install-Package Microsoft.Owin.Host.SystemWeb
 Install-Package Microsoft.Owin.Cors
 **********************************
 
+OAuth
+Install-Package Microsoft.Owin.Security.OAuth
+**********************************
+
 
 Requisitos
 

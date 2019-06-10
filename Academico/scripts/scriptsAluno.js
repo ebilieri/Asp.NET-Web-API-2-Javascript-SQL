@@ -31,6 +31,8 @@ function carregarAlunos() {
     console.log('UNSENT', xhr.readyState);
 
     xhr.open('GET', 'https://localhost:44346/api/aluno/listar', true);
+    xhr.setRequestHeader('Authorization', sessionStorage.getItem('token'));
+    
     console.log('OPENED', xhr.readyState);
 
     xhr.onerror = function(){

@@ -1,4 +1,7 @@
-﻿using Microsoft.Owin.Security.OAuth;
+﻿using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OAuth;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -21,14 +24,44 @@ namespace WebApp
             if (usuario == null)
             {
                 context.SetError("invalid_grant", "Usuário não encontrado ou senha incorreta");
-            }
-            else
-            {
-                var identidadeUsaurio = new ClaimsIdentity(context.Options.AuthenticationType);
-                context.Validated(identidadeUsaurio);
+                return;
             }
 
-            
+            var props = new AuthenticationProperties(new Dictionary<string, string>
+            {
+                {
+                    "UserName", context.UserName
+                }
+            });
+
+            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+            var identidadeUsaurio = new AuthenticationTicket(identity, props);
+
+            foreach (var funcao in usuario.Funcoes)
+            {
+                identidadeUsaurio.Identity.AddClaim(new Claim(ClaimTypes.Role, funcao));
+            }
+
+            context.Validated(identidadeUsaurio);
+        }
+
+        public override Task TokenEndpoint(OAuthTokenEndpointContext context)
+        {
+            foreach (var item in context.Properties.Dictionary)
+            {
+                context.AdditionalResponseParameters.Add(item.Key, item.Value);
+            }
+
+            var claims = context.Identity.Claims
+                .GroupBy(x => x.Type)
+                .Select(y => new { Claim = y.Key, Value = y.Select(z => z.Value).ToArray() });
+
+            foreach (var item in claims)
+            {
+                context.AdditionalResponseParameters.Add(item.Claim, JsonConvert.SerializeObject(item.Value));
+            }
+
+            return base.TokenEndpoint(context);
         }
     }
 }

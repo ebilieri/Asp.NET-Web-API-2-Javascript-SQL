@@ -15,7 +15,7 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Route("Listar")]
-        [Authorize]
+        [Authorize(Roles = Funcao.Professor)]
         public IHttpActionResult Listar()
         {
             try
